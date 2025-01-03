@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 
 const App = () => {
-  let [time, setTime] = useState(0);
-  let [timer, setTimer] = useState(null);
-  let [isRunning, setIsRunning] = useState(false);
+  const [time, setTime] = useState(0);
+  const [timer, setTimer] = useState(null);
+  const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
     if (isRunning) {
@@ -20,24 +20,29 @@ const App = () => {
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs
-      .toString()
-      .padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const handleStart = () => {
+    setIsRunning(true);
+  };
+
+  const handleStop = () => {
+    setIsRunning(false);
   };
 
   const handleReset = () => {
-    clearInterval(timer);
-    setTime(0);
     setIsRunning(false);
+    setTime(0);
+    clearInterval(timer);
   };
 
   return (
     <div>
-      <h1>Stop Watch</h1>
-      <p>Time: {formatTime(time)}</p>
-      <button onClick={() => setIsRunning(!isRunning)}>
-        {isRunning ? 'Stop' : 'Start'}
-      </button>
+      <h1>Stopwatch</h1>
+      <div>Time: {formatTime(time)}</div>
+      <button onClick={handleStart}>Start</button>
+      <button onClick={handleStop}>Stop</button>
       <button onClick={handleReset}>Reset</button>
     </div>
   );
